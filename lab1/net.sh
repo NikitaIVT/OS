@@ -56,17 +56,17 @@ shift
 done
 fi
 
-if [ -n "$arg" ] && [ "$com" = "cmask" ] &&
+if [ -n "$arg" ] && [ "$com" = "cmask" ]
 then
 echo "$(sudo ifconfig ${2} netmask ${3})"
 fi
 
-if [ -n "$arg" ] && [ "$com" = "cip" ] &&
+if [ -n "$arg" ] && [ "$com" = "cip" ]
 then
 echo "$(sudo ifconfig ${2} ${3})"
 fi
 
-if [ -n "$arg" ] && [ "$com" = "cgate" ] &&
+if [ -n "$arg" ] && [ "$com" = "cgate" ]
 then
-echo "$(sudo route add default gw ${2} ${3})"
+echo "$(sudo route add default gw ${3} ${2})"
 fi
