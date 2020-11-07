@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
         "Пример: fsmanager -d ./samplefile\n"
         "-s - подсчет размера файла/директории\n"
         "Пример: fsmanager -s ./1\n"
-        "-ls - перемещение файла\n"
+        "-ls - вывод содержимого папки\n"
         "Пример: fsmanager -ls ./samplefile ./1/samplefile\n"
         "-procfs - вывод данных из procfs\n"
         "Пример: fsmanager -procfs\n");
