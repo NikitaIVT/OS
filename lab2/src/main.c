@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
         "-s - подсчет размера файла/директории\n"
         "Пример: fsmanager -s ./1\n"
         "-ls - вывод содержимого папки\n"
-        "Пример: fsmanager -ls ./samplefile ./1/samplefile\n"
+        "Пример: fsmanager -ls ."
         "-procfs - вывод данных из procfs\n"
         "Пример: fsmanager -procfs\n");
   } else {
