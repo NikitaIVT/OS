@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
       return -1;
     }
   } else if(strcmp(argv[1],"-d") == 0){
-    if(argc == 3){
+    if(argc >= 3){
       if (remove(argv[2]) == -1)
       {
         printf("Error during deleting file\n");
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     }
 
   } else if(strcmp(argv[1],"-s") == 0){
-    if(argc == 3){
+    if(argc >= 3){
       struct stat statst;
       if (stat(argv[2], &statst) != 0)
       {
@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
       return -1;
     }
   } else if(strcmp(argv[1],"-ls") == 0){
-    if(argc == 3){
+    if(argc >= 3){
       DIR *curdir = opendir(argv[2]);
 
     struct dirent *ep;
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
     }
 
   } else if(strcmp(argv[1],"-procfs") == 0){
-if(argc == 2){
+if(argc >= 2){
     DIR *dir;
         struct dirent *entry;
 
