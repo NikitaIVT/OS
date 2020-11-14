@@ -4,7 +4,6 @@
 #include <dirent.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -12,13 +11,38 @@
 #include <signal.h>
 
 void sigHandler(int signum) {
-  printf("Signal %d was handled successfully", signum);
+  printf("Signal %d was handled successfully\n", signum);
   _exit(EXIT_FAILURE);
 }
 
 int main(int argc, char** argv) {
   int pid, ppid, rez;
   char adr[] = "../lab2/fsmanager";
+   if(signal(SIGINT, sigHandler) == SIG_ERR){
+      printf("Error while receiving signal\n");
+    } else {
+      printf("Signal can be handled successfully\n");
+    }
+ if(signal(SIGTSTP, sigHandler) == SIG_ERR){
+      printf("Error while receiving signal\n");
+    } else {
+      printf("Signal can be handled successfully\n");
+    }
+ if(signal(SIGTERM, sigHandler) == SIG_ERR){
+      printf("Error while receiving signal\n");
+    } else {
+      printf("Signal can be handled successfully\n");
+    }
+ if(signal(SIGQUIT, sigHandler) == SIG_ERR){
+      printf("Error while receiving signal\n");
+    } else {
+      printf("Signal can be handled successfully\n");
+    }
+
+  
+  
+  
+  
   if(argc == 1){
    printf("Check for help like this\n./litesh -h\n");
    return 0;
@@ -33,9 +57,6 @@ int main(int argc, char** argv) {
       printf("Input args: ");
       for (int i = 0; i < 3; i++) {
         fgets(args[i], 40, stdin );
-      }
-      if(strcmp("-h", args[0]) == 0){
-        printf("\narg correct\n");
       }
       for (int i = 0; i < 3; i++) {
         for(int j = 0; j < 40; j++){
@@ -65,7 +86,10 @@ int main(int argc, char** argv) {
       pid_t pid, ppid;
       pid = getpid();
       ppid = getppid();
-      execl(argv[2], argv[2], NULL);
+      if (execl(argv[2], argv[2], NULL) == -1) {
+	perror("exec");
+	_exit(EXIT_FAILURE);
+      }
       wait(&status);
       printf(
           "Process-child was created successfully\n %d - child's number\n %d - "
@@ -100,20 +124,16 @@ int main(int argc, char** argv) {
       printf("Wrong amount of arguements");
       return 1;
     }
-    if(signal(SIGSEGV, sigHandler) == SIG_ERR){
-      printf("Error while receiving signal\n");
-    } else {
-      printf("Signal can be handled successfully\n");
-    }
+    sleep(30);
     return 0;
   } else if(strcmp("-h", argv[1]) == 0){
     printf("Авторы: Мяконьких Дмитрий, Шиндель Эдуард, Полищук Никита\n");
     printf("-fm - Вызов программы для работы с файловой системой\n");
     printf("Пример запуска - ./litesh -fm\n");
     printf("-cp - Порождение процесса\n");
-    printf("Пример запуска - ./litesh -cp\n");
+    printf("Пример запуска - ./litesh -cp proc_name\n");
     printf("-cbp - Перевод процесса в фоновый режим\n");
-    printf("Пример запуска - ./litesh -cbp\n");
+    printf("Пример запуска - ./litesh -cbp proc_name\n");
     printf("-rs - Получение сигнала от процесса\n");
     printf("Пример запуска - ./litesh -rs\n");
   }
