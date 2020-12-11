@@ -20,6 +20,23 @@ void sigHandler(int signum) {
 
 int main(int argc, char** argv) {
   int pid, ppid, rez;
+  char *error;
+  void *handle = dlopen("./dlib/libhelp.so", RTLD_LAZY);
+    if (!handle) {
+        fputs (dlerror(), stderr);
+        exit (-1);
+    }
+
+    if ((error = dlerror()) != NULL) {
+        fprintf (stderr, "%s\n", error);
+        exit (-1);;
+    }
+    typedef void (*func_info)();
+    func_info info = (func_info)dlsym(handle,"info");
+    if ((error = dlerror()) != NULL) {
+        fprintf (stderr, "%s\n", error);
+        exit(-1);
+    }
   char command[256], arg[256], ans[256];
     struct sockaddr_in server, client;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -66,10 +83,10 @@ int main(int argc, char** argv) {
   } else if (strcmp("-cbp", command) == 0) {
     int ind = 0;
     pid_t pidt;
-    pidt = fork();
     char invite[30] = "Proc name?\n>";
     send(newsock, invite, 30, 0);
     recv(newsock, arg, 256, 0);
+    pidt = fork();
     if (pidt == -1) {
       strcpy(ans, "Process creation failure\n");
       send(newsock, ans, 256, 0);
@@ -97,7 +114,10 @@ int main(int argc, char** argv) {
     }
     strcpy(ans, "Signal was catched\n");
     send(newsock, ans, 256, 0);
-    }
+  } else if(strcmp("-h", command) == 0){
+    info(ans);
+    send(newsock, ans, 256, 0);
+  }
 
 }
 }

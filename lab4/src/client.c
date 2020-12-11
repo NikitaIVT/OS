@@ -23,15 +23,16 @@ int main(int argc, char *argv[]) {
       printf("enter command\n>");
       scanf("%s", command);
       send(sock, command, 256,0);
+      if(strcmp("-h", command) != 0){
       recv(sock, ans, 256,0);
       printf("Server send: \n%s\n", ans);
-      if(strcmp(command, "-rs")){
+      if((strcmp(command, "-rs") != 0)){
       scanf("%s", arg);
       send(sock, arg, 256,0);
       recv(sock, ans, 256,0);
       printf("Server send: \n%s\n", ans);
     }
-    }
+  }}
 
     close(sock);
 }
