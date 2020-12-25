@@ -1,6 +1,7 @@
 
 #include <arpa/inet.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
@@ -23,16 +24,27 @@ int main(int argc, char *argv[]) {
       printf("enter command\n>");
       scanf("%s", command);
       send(sock, command, 256,0);
-      if(strcmp("-h", command) != 0){
-      recv(sock, ans, 256,0);
-      printf("Server send: \n%s\n", ans);
-      if((strcmp(command, "-rs") != 0)){
-      scanf("%s", arg);
-      send(sock, arg, 256,0);
-      recv(sock, ans, 256,0);
-      printf("Server send: \n%s\n", ans);
+      if(strcmp("-h", command) == 0){
+        recv(sock, ans, 256,0);
+        printf("Server send: \n%s\n", ans);
+      } else if((strcmp(command, "-rs") == 0)){
+        recv(sock, ans, 256,0);
+        printf("Server send: \n%s\n", ans);
+      } else if((strcmp(command, "-cbp") == 0) || (strcmp(command, "-cp") == 0)){
+        recv(sock, ans, 256,0);
+        printf("Server send: \n%s\n", ans);
+        scanf("%s", arg);
+        send(sock, arg, 256,0);
+        recv(sock, ans, 256,0);
+        printf("Server send: \n%s\n", ans);
+      } else{
+        printf("looks like a wrong command, try another one\nServer also said\n");
+        recv(sock, ans, 256,0);
+        printf("%s\n", ans);
+      }
     }
-  }}
+
+
 
     close(sock);
 }

@@ -1,4 +1,4 @@
-LDFLAGS='-ldl'
+LDFLAGS=-ldl
 
 .PHONY: clean
 

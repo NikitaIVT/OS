@@ -1,0 +1,17 @@
+[Unit]
+Description=LiteSH_daemon
+
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/home/_chariot/os/lab4/serv
+ExecReload=/home/_chariot/os/lab4/serv
+KillMode=control-group
+TimeoutStartSec=120
+OOMScoreAdjust=-1000
+
+
+[Install]
+WantedBy=multi-user.target
