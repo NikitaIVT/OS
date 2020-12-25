@@ -1,0 +1,5 @@
+language: c++
+dist: xenial
+os: linux
+compiler: gcc
+script: make && git ls-files src/ && git diff --exit-code
